@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa Jornada - Despedida</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #d4a373;
+            --warm-bg: #fefae0;
+            --card-bg: #ffffff;
+            --text-main: #344e41;
+            --button-grad: linear-gradient(to right, #bc6c25, #dda15e);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--warm-bg);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            max-width: 450px;
+            width: 100%;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            text-align: center;
+            border: 1px solid rgba(212, 163, 115, 0.2);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            display: block;
+        }
+
+        h1 { font-weight: 600; color: #bc6c25; margin-bottom: 10px; }
+        .intro-text { font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; opacity: 0.8; }
+
+        .search-area {
+            background: #faedcd;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        input {
+            width: 85%;
+            padding: 12px 15px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            outline: none;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        button {
+            background: var(--button-grad);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #messageBox {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background: white;
+            display: none;
+            border: 1px dashed var(--accent-color);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="img-wrapper">
+            <img src="Time.jpg" alt="Nosso Time">
+        </div>
+
+        <h1>Revivam o E-Commerce! 🚀</h1>
+        <p class="intro-text">
+            Obrigado pelo tempo e pela oportunidade. <br>
+            Hoje faz exatos 355 dias desde que a Pamela deixou o time, mas faço dela as minhas palavras: É AMIGOS! TERMINOU. <br>
+            <br> Digite seu 1º nome abaixo para ler sua mensagem.
+        </p>
+
+        <div class="search-area">
+            <input type="text" id="userName" placeholder="Seu primeiro nome..." onkeypress="handleEnter(event)">
+            <br>
+            <button onclick="revelar()">Ler minha mensagem</button>
+        </div>
+
+        <div id="messageBox">
+            <h3 id="targetName" style="margin-top:0; color:#bc6c25;"></h3>
+            <p id="targetText" style="font-style: italic;"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const mensagens = {
+            "amanda": "Amanda, obrigado pela oportunidade de trabalhar com você e, principalmente, pela confiança depositada em mim nas demandas.",
+            "jef": "Jef, obrigado especialmente pela paciência e pelos conselhos. Nem sempre tivemos a mesma opinião, mas sempre tivemos um objetivo em comum: o melhor para o time.",
+            "larissa": "Lari, no começo às vezes tínhamos opiniões divergentes sobre os processos, mas obrigado por, em todas as ocasiões, você ter me permitido ter voz. kk",
+            "luiz": "Luiz, obrigado pelas risadas e pelos comentários aleatórios do nada. Vou sentir falta disso às vezes!",
+            "yasmin": "Yas, obrigado por literalmente todo o suporte. Você sempre foi aberta e sempre, literalmente SEMPRE, permitiu que eu opinasse nos processos e levou minha voz em consideração, desde o início. (Assiste Got e Twd da Telltale)",
+            "dansley": "Dansley, o que eu posso falar de você? Se dizem que tenho mentalidade de Analista, é porque VOCÊ, desde o começo, permitiu que isso acontecesse. Jamais vou esquecer de toda a liberdade e da confiança que você me ensinou a ter. (Assiste Got)",
+            "time": "Quero um dia estar em uma mesa e ouvir que o E-Commerce foi o time que disparou em vendas. Quero poder acompanhar de longe o crescimento da equipe que me acolheu tão bem."
+        };
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                revelar();
+            }
+        }
+
+        function revelar() {
+            const inputVal = document.getElementById('userName').value.toLowerCase().trim();
+            const box = document.getElementById('messageBox');
+            const tName = document.getElementById('targetName');
+            const tText = document.getElementById('targetText');
+
+            if (mensagens[inputVal]) {
+                tName.innerText = "Para " + inputVal.charAt(0).toUpperCase() + inputVal.slice(1) + ":";
+                tText.innerText = mensagens[inputVal];
+                box.style.display = 'block';
+                
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#bc6c25', '#dda15e', '#fefae0']
+                });
+            } else {
+                alert("Nome não encontrado! Tente o seu primeiro nome (ex: Amanda).");
+            }
+        }
+    </script>
+</body>
+</html>
